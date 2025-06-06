@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Payment - AAD Wear</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand-title">AAD Wear</div>
+    <a href="index.html">Main</a>
+    <a href="home.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About</a>
+  </nav>
+
+  <div class="payment-container" style="max-width:400px;margin:40px auto;padding:24px;border:1px solid #eee;border-radius:10px;">
+    <h2 id="productName"></h2>
+    <p>Select Payment Method:</p>
+    <button onclick="pay('UPI')">Pay with UPI</button>
+    <button onclick="pay('PayPal')">Pay with PayPal</button>
+    <button onclick="pay('Credit Card')">Pay with Credit Card</button>
+    <div id="paymentResult" style="margin-top:16px;color:green;"></div>
+  </div>
+
+  <script>
+    // Get product name from URL
+    function getProductName() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('product') || 'Product';
+    }
+
+    document.getElementById('productName').innerText = 'Buy ' + getProductName();
+
+    function pay(method) {
+      if (method === 'UPI') {
+        // Example: Open UPI payment link (replace with your real UPI link)
+        window.location.href = "upi://pay?pa=yourupiid@bank&pn=AADWear&am=500&tn=Payment";
+      } else if (method === 'PayPal') {
+        // Example: Redirect to PayPal (replace with your real PayPal link)
+        window.location.href = "https://www.paypal.com/paypalme/yourpaypalid/500";
+      } else if (method === 'Credit Card') {
+        // Example: Redirect to Stripe or your payment processor
+        window.location.href = "https://your-credit-card-payment-link.com";
+      } else {
+        document.getElementById('paymentResult').innerText = 'Invalid payment method.';
+      }
+    }
+  </script>
+</body>
+</html>

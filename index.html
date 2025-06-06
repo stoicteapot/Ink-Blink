@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AAD Wear</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Cinzel Font for Premium Look -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+   <!-- Hero Image -->
+  <div class="hero-image">
+    <img src="images/main logo ink blink.jpg" alt="Ink blink Banner" style="width:100%; max-height:350px; object-fit:cover;">
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+  <div class="brand-title">Ink blink</div>
+  <button class="toggle-button" onclick="toggleMenu()">☰</button>
+  <div class="navbar-links" id="navbarLinks">
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+  <section id="products" class="product-grid">
+  <div class="product-card" onclick="openProductModal('product1')">
+    <img src="images/nike.jpg" alt="Product 1">
+    <div class="product-name">Nike Shirt Collection</div>
+  </div>
+  <div class="product-card" onclick="openProductModal('product2')">
+    <img src="images/calvin.jpg" alt="Product 2">
+    <div class="product-name">Calvin Shirt Collection</div>
+  </div>
+  <!-- Add more product cards as needed -->
+</section>
+
+  <!-- Product Modals -->
+<div id="product1" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeProductModal('product1')">&times;</span>
+    <h2>Nike Shirt</h2>
+    <p>Available in all sizes</p>
+  </div>
+</div>
+
+<div id="product2" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeProductModal('product2')">&times;</span>
+    <h2>Calvin Shirt</h2>
+    <p>Available in all sizes</p>
+  </div>
+</div>
+
+  <div id="aboutModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('aboutModal')">&times;</span>
+      <h2>About AAD Wear</h2>
+      <p>AAD Wear was established in 2025 with a vision to redefine fashion with premium quality and timeless designs.</p>
+    </div>
+  </div>
+
+
+<!-- Add Buy Now buttons to product cards -->
+<section id="products" class="product-grid">
+  <div class="product-card" onclick="openProductModal('product1')">
+    <img src="images/nike.jpg" alt="Product 1">
+    <div class="product-name">Nike Shirt Collection</div>
+    <button class="buy-btn" onclick="event.stopPropagation();openBuyModal('Nike Shirt Collection')">Buy Now</button>
+  </div>
+  <div class="product-card" onclick="openProductModal('product2')">
+    <img src="images/calvin.jpg" alt="Product 2">
+    <div class="product-name">Calvin Shirt Collection</div>
+    <button class="buy-btn" onclick="event.stopPropagation();openBuyModal('Calvin Shirt Collection')">Buy Now</button>
+  </div>
+  <!-- Add more product cards as needed -->
+</section>
+
+<!-- Buy Modal -->
+<div id="buyModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeBuyModal()">&times;</span>
+    <h2 id="buyProductName"></h2>
+    <p>Select Payment Method:</p>
+    <button onclick="pay('UPI')">Pay with UPI</button>
+    <button onclick="pay('PayPal')">Pay with PayPal</button>
+    <button onclick="pay('Credit Card')">Pay with Credit Card</button>
+    <div id="paymentResult" style="margin-top:10px;color:green;"></div>
+  </div>
+</div>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <form action="https://formspree.io/f/mdkgvbea" method="POST">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="_replyto" required />
+
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" required></textarea>
+
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <script>
+    function toggleMenu() {
+      const navbarLinks = document.getElementById('navbarLinks');
+      navbarLinks.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Close modal when clicking outside of the modal content
+    window.onclick = function(event) {
+      const modals = document.getElementsByClassName('modal');
+      for (let i = 0; i < modals.length; i++) {
+        if (event.target == modals[i]) {
+          modals[i].style.display = 'none';
+        }
+      }
+    }
+    function openProductModal(modalId) {
+  document.getElementById(modalId).style.display = 'block';
+}
+
+function closeProductModal(modalId) {
+  document.getElementById(modalId).style.display = 'none';
+}
+
+// Close modal when clicking outside of the modal content
+window.onclick = function(event) {
+  const modals = document.getElementsByClassName('modal');
+  for (let i = 0; i < modals.length; i++) {
+    if (event.target == modals[i]) {
+      modals[i].style.display = 'none';
+    }
+  }
+}
+function openBuyModal(productName) {
+    document.getElementById('buyProductName').innerText = 'Buy ' + productName;
+    document.getElementById('buyModal').style.display = 'block';
+    document.getElementById('paymentResult').innerText = '';
+  }
+
+  function closeBuyModal() {
+    document.getElementById('buyModal').style.display = 'none';
+  }
+
+  function pay(method) {
+    // Here you would integrate real payment gateways
+    document.getElementById('paymentResult').innerText = 'Redirecting to ' + method + ' payment...';
+    setTimeout(closeBuyModal, 2000);
+  }
+
+  // Ensure modal closes when clicking outside
+  window.onclick = function(event) {
+    const modals = document.getElementsByClassName('modal');
+    for (let i = 0; i < modals.length; i++) {
+      if (event.target == modals[i]) {
+        modals[i].style.display = 'none';
+      }
+    }
+  }
+  </script>
+
+</body>
+</html>
