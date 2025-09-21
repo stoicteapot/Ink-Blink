@@ -246,3 +246,139 @@ body {
   object-fit: cover;
   border-radius: 8px;
 }
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f8f8;
+  padding: 20px;
+}
+
+.navbar {
+  background-color: #222;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  color: white;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+}
+
+.payment-container {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 24px;
+  border-radius: 10px;
+}
+
+button {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #0a74da;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0958a8;
+}
+
+#card-element {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  background: white;
+}
+
+#card-errors {
+  color: red;
+  margin-top: 8px;
+}
+/* Container styles */
+.card-tab {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+}
+
+.card-tab h3 {
+  text-align: center;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.card-input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  transition: 0.2s ease;
+}
+
+/* Stripe's iframe needs height */
+#card-element {
+  height: 40px;
+}
+
+/* Submit Button */
+button#submit {
+  background-color: #0a74da;
+  color: white;
+  padding: 14px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button#submit:hover {
+  background-color: #0958a8;
+}
+
+/* Error Message */
+.error-msg {
+  color: #e63946;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+/* ✅ Mobile Responsiveness */
+@media screen and (max-width: 600px) {
+  .card-tab {
+    margin: 20px 16px;
+    padding: 20px;
+  }
+
+  button#submit {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .card-tab h3 {
+    font-size: 1.1rem;
+  }
+}
