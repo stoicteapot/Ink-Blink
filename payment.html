@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Payment - AAD Wear</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
   <nav class="navbar">
@@ -20,6 +21,14 @@
     <button onclick="pay('UPI')">Pay with UPI</button>
     <button onclick="pay('PayPal')">Pay with PayPal</button>
     <button onclick="pay('Credit Card')">Pay with Credit Card</button>
+
+    <!-- Stripe Card Payment Form -->
+    <div id="paymentForm" style="display:none;">
+      <div id="card-element"></div>
+      <div id="card-errors" role="alert"></div>
+      <button id="submit">Pay Now</button>
+    </div>
+
     <div id="paymentResult" style="margin-top:16px;color:green;"></div>
   </div>
 
@@ -32,20 +41,52 @@
 
     document.getElementById('productName').innerText = 'Buy ' + getProductName();
 
+    // Stripe configuration
+    const stripe = Stripe('your-publishable-key-here');  // Replace with your Stripe publishable key
+    const elements = stripe.elements();
+    const card = elements.create('card');
+    card.mount('#card-element');
+
     function pay(method) {
       if (method === 'UPI') {
-        // Example: Open UPI payment link (replace with your real UPI link)
+        // Open UPI payment link (replace with real link)
         window.location.href = "upi://pay?pa=yourupiid@bank&pn=AADWear&am=500&tn=Payment";
       } else if (method === 'PayPal') {
-        // Example: Redirect to PayPal (replace with your real PayPal link)
+        // Redirect to PayPal (replace with real link)
         window.location.href = "https://www.paypal.com/paypalme/yourpaypalid/500";
       } else if (method === 'Credit Card') {
-        // Example: Redirect to Stripe or your payment processor
-        window.location.href = "https://your-credit-card-payment-link.com";
+        // Show Stripe payment form
+        document.getElementById('paymentForm').style.display = 'block';
       } else {
         document.getElementById('paymentResult').innerText = 'Invalid payment method.';
       }
     }
+
+    document.getElementById('submit').addEventListener('click', async (event) => {
+      event.preventDefault();
+
+      const {token, error} = await stripe.createToken(card);
+
+      if (error) {
+        document.getElementById('card-errors').textContent = error.message;
+      } else {
+        // Send the token to the server for payment processing
+        const response = await fetch('/process-payment', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({token: token.id, amount: 500})  // Amount in cents (500 = $5)
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          document.getElementById('paymentResult').innerText = 'Payment Successful!';
+        } else {
+          document.getElementById('paymentResult').innerText = 'Payment Failed. Try again.';
+        }
+      }
+    });
   </script>
 </body>
 </html>
